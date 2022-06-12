@@ -13,7 +13,7 @@ const initialState = {
 export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(AppReducer, initialState);
+    const [state, dispatch] = useReducer(AppReducer, initialState);  // eslint-disable-line
 
     return (
     <GlobalContext.Provider
