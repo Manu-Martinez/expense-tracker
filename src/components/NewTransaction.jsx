@@ -1,47 +1,43 @@
-import React, { useState } from "react";
+import React, {useState, useContext} from 'react'
+import { GlobalContext } from '../context/GlobalState';
+
 
 const NewTransaction = () => {
-    const [text, setText] = useState("");
-    const [number, setNumber] = useState(0);
-    
+    const [text, setText] = useState('');
+    const [amount, setAmount] = useState(0);
+
+    const { addTransaction } = useContext(GlobalContext);
+
+    const onSubmit = e => {
+    e.preventDefault();
+
+    const newTransaction = {
+      id: Math.floor(Math.random() * 100000000), text, amount: +amount
+    }
+
+    addTransaction(newTransaction);
+    }
+
     return (
-    <div className="grid grid-flow-row gap-2">
-        <h1 className="text-lg font-bold">Add new transaction</h1>
-        <hr className="h-0.5 bg-black" />
-        <form className="grid grid-flow-row gap-2 ">
-            <div className="grid grid-flow-row">
-                <label htmlFor="text" className="mt-2 font-semibold">
-                    Text
-                </label>
-                <input
-                type="text"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="Enter text..."
-                className="mt-0.5 rounded p-2 shadow-sm shadow-gray-400 outline-none"
-                />
-            </div>
-            <div className="mt-2 grid grid-flow-row">
-                <label htmlFor="number" className="font-semibold">
-                Amount
-                </label>
-                <label htmlFor="number" className="font-semibold">
-                    (negative - expense, positive - income)
-                </label>
-                <input
-                type="number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
-                placeholder="Enter amount..."
-                className="mt-0.5 rounded p-2 shadow-sm shadow-gray-400 outline-none"
-                />
-            </div>
-            <button className="mt-2 rounded bg-purple-500 p-2 font-bold text-white shadow-sm shadow-gray-400">
-                Add transaction
-            </button>
-        </form>
-    </div>
-);
-};
+        <>
+    <form className='text-center space-y-5' onSubmit={onSubmit}>
+        <div className="text-center space-x-4 space-y-4">
+            <label htmlFor="text" className='text-center'>Text</label>
+            <input type="text" className='text-center' value={text} onChange={(e) => setText(e.target.value)} placeholder="Enter text..." />
+        </div>
+        <div className="text-center space-x-4 space-y-4">
+            <label htmlFor="amount" className='text-center'
+            >Amount 
+            (negative - expense, positive - income)</label
+            >
+            <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Enter amount..." />
+        </div>
+        <div className='text-center space-y-4'>
+        <button className="button text-center" >Add transaction</button>
+        </div>
+    </form>
+        </>
+    );
+}
 
 export default NewTransaction;

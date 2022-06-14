@@ -1,20 +1,32 @@
-import React from "react";
+import React, {useContext} from 'react';
+import { GlobalContext } from '../context/GlobalState';
 
-const Transaction = ({ transaction, income }) => {
-    const sign = transaction.amount < 0 ? "-" : "+";
-    const color = transaction.amount < 0 ? "bg-red-500" : "bg-green-400";
+//Money formatter function
+function moneyFormatter(num) {
+    let p = num.toFixed(2).split('.');
+return (
+    '$ ' +
+    p[0]
+    .split('')
+    .reverse()
+    .reduce(function (acc, num, i, orig) {
+        return num === '-' ? acc : num + (i && !(i % 3) ? ',' : '') + acc;
+    }, '') +
+    '.' +
+    p[1]
+);
+}
+
+export const Transaction = ({ transaction }) => {
+    const { deleteTransaction } = useContext(GlobalContext);
+
+    const sign = transaction.amount < 0 ? '-' : '+';
 
     return (
-    <div className="grid h-8 grid-flow-col justify-between rounded bg-gray-50 shadow-sm shadow-gray-400">
-        <p className="self-center pl-2">{transaction.text}</p>
-        <div className="grid grid-flow-col gap-2">
-            <p className="self-center">
-            {sign}${Math.abs(transaction.amount)}
-            </p>
-        <div className={`${color} w-2 rounded-r`}></div>
-        </div>
-    </div>
-);
-};
+        <li className={transaction.amount < 0 ? 'minus' : 'plus'}>
+        {transaction.text} <span>{sign}{moneyFormatter(transaction.amount)}</span><button className='pl-4' onClick={() => deleteTransaction(transaction.id)} >Delete</button>
+        </li>
+    )
+}
 
 export default Transaction;
