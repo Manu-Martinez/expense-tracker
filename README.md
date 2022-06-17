@@ -1,6 +1,6 @@
 # Expense Tracker
 
- App made using React and TailwindCSS. This project was created in order for users to have a history of their income and expenses. 
+ App made using React hooks, context and TailwindCSS. This project was created in order for users to have a history of their income and expenses. 
 
 
 
