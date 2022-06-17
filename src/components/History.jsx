@@ -9,7 +9,7 @@ const History = () => {
     <div className="grid grid-flow-row gap-2">
         <h1 className="text-lg font-bold">History</h1>
         <hr className="h-0.5 bg-black" />
-        <div className="mt-2 grid grid-flow-row gap-2">
+        <div className="grid grid-rows-3 grid-flow-col">
             {transactions.map((transaction) => (
             <Transaction
             key={transaction.id}
